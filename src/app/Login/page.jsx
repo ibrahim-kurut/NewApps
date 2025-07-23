@@ -1,0 +1,48 @@
+import React from "react";
+
+const LoginPage = () => {
+  return (
+    <div>
+      <div className="flex items-center justify-center h-screen w-[100%] ">
+        <div className=" w-[60%] h-[90%] rounded-lg  flex items-center justify-center ">
+          <form className="bg-gray-200 w-[80%] h-[80%] rounded-lg shadow-lg p-6  ">
+            <h1 className=" text-black text-2xl font-bold text-center">
+              Login Page
+            </h1>
+            <label className="text-black font-semibold mb-5">Email</label>
+            <div className="mt-6">
+              <input
+                type="email"
+                className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
+                placeholder="Enter your E mail"
+              />
+            </div>
+            <label className="text-black font-semibold mb-5">Password</label>
+            <div className="mt-6">
+              <input
+                type="password"
+                className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
+                placeholder="Enter your Password"
+              />
+            </div>
+            <div className="flex items-center justify-center mt-6">
+              <button className="bg-blue-950 text-white px-1 py-2 w-[80%] rounded-lg hover:bg-blue-900 capitalize">
+                update
+              </button>
+            </div>
+            <div className="flex items-center justify-center mt-6">
+              <h3>
+                Eğer Henüz Üye Değilseniz{" "}
+                <a href="/Register" className="text-blue-600 hover:underline">
+                  Kayıt Olun
+                </a>
+              </h3>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;
