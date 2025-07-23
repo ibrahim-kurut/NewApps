@@ -1,11 +1,28 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 const RegisterPage = () => {
+  const [firstName, setFirstName] = useState("");
+  const [surName, setSurName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (firstName === "" || surName === "" || email === "" || password === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+    console.log({ firstName, surName, email, password });
+    alert("Registration successful");
+  };
   return (
     <div>
       <div className="flex items-center justify-center h-screen w-[100%] ">
         <div className=" w-[60%] h-[90%] rounded-lg  flex items-center justify-center ">
-          <form className="bg-gray-200 w-[80%] h-[100%] rounded-lg shadow-lg p-6  ">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-gray-200 w-[80%] h-[100%] rounded-lg shadow-lg p-6  "
+          >
             <h1 className=" text-black text-2xl font-bold text-center">
               Register Page
             </h1>
@@ -13,6 +30,8 @@ const RegisterPage = () => {
             <div className="mt-6">
               <input
                 type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
                 placeholder="Enter your First Name"
               />
@@ -21,6 +40,8 @@ const RegisterPage = () => {
             <div className="mt-6">
               <input
                 type="text"
+                value={surName}
+                onChange={(e) => setSurName(e.target.value)}
                 className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
                 placeholder="Enter your SurName"
               />
@@ -29,6 +50,8 @@ const RegisterPage = () => {
             <div className="mt-6">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
                 placeholder="Enter your E mail"
               />
@@ -38,6 +61,8 @@ const RegisterPage = () => {
             <div className="mt-6">
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
                 placeholder="Enter your Password"
               />

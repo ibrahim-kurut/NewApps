@@ -1,11 +1,28 @@
-import React from "react";
-
+"use client";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") {
+      toast.error("Please fill in all fields");
+      return;
+    } else {
+      toast.success("Login successful");
+      // Here you can add your login logic, like calling an API
+    }
+    console.log({ email, password });
+  };
   return (
     <div>
       <div className="flex items-center justify-center h-screen w-[100%] ">
         <div className=" w-[60%] h-[90%] rounded-lg  flex items-center justify-center ">
-          <form className="bg-gray-200 w-[80%] h-[80%] rounded-lg shadow-lg p-6  ">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-gray-200 w-[80%] h-[80%] rounded-lg shadow-lg p-6  "
+          >
             <h1 className=" text-black text-2xl font-bold text-center">
               Login Page
             </h1>
@@ -13,6 +30,8 @@ const LoginPage = () => {
             <div className="mt-6">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
                 placeholder="Enter your E mail"
               />
@@ -21,13 +40,15 @@ const LoginPage = () => {
             <div className="mt-6">
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="px-1 py-2 w-[100%] border-2 border-gray-300 rounded-lg hover:bg-gray-100"
                 placeholder="Enter your Password"
               />
             </div>
             <div className="flex items-center justify-center mt-6">
               <button className="bg-blue-950 text-white px-1 py-2 w-[80%] rounded-lg hover:bg-blue-900 capitalize">
-                update
+                Login
               </button>
             </div>
             <div className="flex items-center justify-center mt-6">
