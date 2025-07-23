@@ -1,19 +1,31 @@
 "use client";
+import { registerValidationSchema } from "@/utils/auth";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
   const [surName, setSurName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (firstName === "" || surName === "" || email === "" || password === "") {
-      alert("Please fill in all fields");
+    // validation
+    const { error, value } = registerValidationSchema.validate({ firstName, surName, email, password });
+    if (error) {
+      toast.error(error.details[0].message);
       return;
+    } else {
+      toast.success("Register successful!");
+      setFirstName("");
+      setSurName("");
+      setEmail("");
+      setPassword("");
+      console.log(value);
+      //! TODO send to server
     }
-    console.log({ firstName, surName, email, password });
-    alert("Registration successful");
   };
   return (
     <div>

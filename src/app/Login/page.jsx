@@ -1,19 +1,28 @@
 "use client";
+import { loginValidationSchema } from "@/utils/auth";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
-      toast.error("Please fill in all fields");
+    // validation
+    const { error, value } = loginValidationSchema.validate({ email, password });
+    if (error) {
+      toast.error(error.details[0].message);
       return;
     } else {
-      toast.success("Login successful");
-      // Here you can add your login logic, like calling an API
+      toast.success("Login successful!");
+      setEmail("");
+      setPassword("");
+      console.log(value);
+      //! TODO send to server
     }
-    console.log({ email, password });
   };
   return (
     <div>
@@ -53,9 +62,9 @@ const LoginPage = () => {
             </div>
             <div className="flex items-center justify-center mt-6">
               <h3>
-                Eğer Henüz Üye Değilseniz{" "}
+                Eger Henuz uye Degilseniz{" "}
                 <a href="/Register" className="text-blue-600 hover:underline">
-                  Kayıt Olun
+                  Kayit Olun
                 </a>
               </h3>
             </div>
