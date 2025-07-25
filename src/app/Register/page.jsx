@@ -2,12 +2,15 @@
 import { registerValidationSchema } from "@/utils/auth";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
   const [surName, setSurName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
 
   const handleSubmit = (e) => {
@@ -18,13 +21,24 @@ const RegisterPage = () => {
       toast.error(error.details[0].message);
       return;
     } else {
-      toast.success("Register successful!");
-      setFirstName("");
-      setSurName("");
-      setEmail("");
-      setPassword("");
-      console.log(value);
-      //! TODO send to server
+      toast.success("Register successful!")
+      // send to server
+      const creatNewUser = async () => {
+        try {
+          const response = await axios.post("http://localhost:8000/users", value);
+          console.log(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      creatNewUser();
+      setTimeout(() => {
+        setFirstName("");
+        setSurName("");
+        setEmail("");
+        setPassword("");
+        router.push("/Login");
+      }, 1500);
     }
   };
   return (
