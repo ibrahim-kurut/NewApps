@@ -1,13 +1,29 @@
 "use client";
 import { loginValidationSchema } from "@/utils/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [users, setUsers] = useState([]);
 
+  const router = useRouter();
 
+  const allUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/users");
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    allUsers();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,13 +32,26 @@ const LoginPage = () => {
     if (error) {
       toast.error(error.details[0].message);
       return;
-    } else {
-      toast.success("Login successful!");
-      setEmail("");
-      setPassword("");
-      console.log(value);
-      //! TODO send to server
     }
+
+    // find user
+    const checkUser = users.find(
+      (user) => user.email === value.email && user.password === value.password
+    );
+
+    if (checkUser) {
+      toast.success("Login successful!");
+      setTimeout(() => {
+        setEmail("");
+        setPassword("");
+        router.push("/profile");
+      }, 1500);
+
+      //! TODO: server'a gerçek giriş isteği gönder
+    } else {
+      toast.error("Login failed! Invalid credentials.");
+    }
+
   };
   return (
     <div>
