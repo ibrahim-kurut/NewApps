@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import bcrypt from "bcryptjs";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +26,7 @@ const LoginPage = () => {
     allUsers();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // validation
     const { error, value } = loginValidationSchema.validate({ email, password });
@@ -35,11 +36,22 @@ const LoginPage = () => {
     }
 
     // find user
-    const checkUser = users.find(
-      (user) => user.email === value.email && user.password === value.password
-    );
+    const checkUser = users.find((user) => user.email === value.email);
 
-    if (checkUser) {
+    if (!checkUser) {
+      toast.error("User not found!");
+      return;
+    }
+
+
+
+    // Şifreyi karşilaştirin
+    const comparePassword = await bcrypt.compare(password, checkUser.password);
+
+
+    const xxx = comparePassword || checkUser.password
+
+    if (checkUser && xxx) {
       toast.success("Login successful!");
       setTimeout(() => {
         setEmail("");

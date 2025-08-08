@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import bcrypt from "bcryptjs";
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,6 +23,19 @@ const RegisterPage = () => {
       return;
     } else {
       toast.success("Register successful!")
+      console.log("value --->", value.password);
+      // hash password
+      const salt = bcrypt.genSaltSync(10);
+      const hashPassword = bcrypt.hashSync(value.password, salt);
+      value.password = hashPassword;
+
+
+      console.log("hashPassword --->", hashPassword);
+
+
+
+
+
       // send to server
       const creatNewUser = async () => {
         try {
